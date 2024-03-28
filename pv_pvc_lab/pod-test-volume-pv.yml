@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-volume
+spec:
+  containers:
+  - name: mysql
+    image: mysql
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: mysql-data
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: password
+      - name: MYSQL_DATABASE
+        value: amlys
+      - name: MYSQL_USER
+        value: amlys
+      - name: MYSQL_PASSWORD
+        value: sylma
+  volumes:
+    - name: mysql-data
+      persistentVolumeClaim:
+        claimName: amlys-pvc
